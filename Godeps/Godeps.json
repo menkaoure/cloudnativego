@@ -1,0 +1,9 @@
+{
+	"ImportPath": "github.com/menkaoure/cloudnativego",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v79",
+	"Packages": [
+		"./..."
+	],
+	"Deps": []
+}
