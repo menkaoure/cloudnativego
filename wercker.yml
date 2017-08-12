@@ -16,6 +16,29 @@ box: golang
 
     # - mongo
     # http://devcenter.wercker.com/docs/services/mongodb.html
+
+# dev:
+#   steps:
+#     - setup-go-workspace:
+#       package-dir: github.com/menkaoure/cloudnativego
+
+#     - script:
+#         name: env
+#         code: env
+
+#     - script:
+#         name: go get
+#         code: |
+#           cd $WERCKER_SOURCE_DIR
+#           go version
+#           go get -u github.com/Masterminds/glide
+#           export PATH=$WERCKER_SOURCE_DIR/bin:$PATH
+#           glide install
+
+#     - iternal/watch: 
+#         code: go run main.go
+#         reload: true
+
 build:
   # The steps that will be executed on build
   # Steps make up the actions in your pipeline
@@ -46,6 +69,15 @@ build:
 
 deploy:
   steps:
+    - internal/docker-push:
+      username: $DOCKER_USERNAME
+      password: $DOCKER_PASSWORD
+      cmd: /cloudnativego/source/hello
+      port: "8080"
+      tag: latest
+      repository: menkaoure/cloudnativego
+      registry: https://registry.hub.docker.com
+
     - heroku-deploy:
       key: $HEROKU_KEY
       user: $HEROKU_USER
